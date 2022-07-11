@@ -28,3 +28,5 @@ j-*.tar
 .envrc
 .DS_Store
 .elixir_ls
+*.db*
+JMdict_e

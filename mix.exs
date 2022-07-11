@@ -20,6 +20,10 @@ defmodule J.MixProject do
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
-    []
+    [
+      {:sweet_xml, "~> 0.7.3"},
+      {:jason, "~> 1.3"},
+      {:exqlite, "~> 0.11.2"}
+    ]
   end
 end
