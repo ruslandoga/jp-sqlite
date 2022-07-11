@@ -141,3 +141,10 @@ sqlite> select l.expression, e.entry from lookup l inner join entries e on e.id 
 </td>
 </tr>
 </table>
+
+```sql
+sqlite> select json_group_array(json(e.entry)) from lookup l inner join entries e on e.id = l.id where l.expression = '肆';
+```
+```json
+[{"k_ele":[{"ke_pri":["ichi1","news1","nf01"],"keb":"四"},{"keb":"４"},{"keb":"肆"}],"r_ele":[{"re_pri":["ichi1"],"reb":"し"},{"re_pri":["ichi1","news1","nf01"],"re_restr":["四"],"reb":"よん"},{"re_restr":["四"],"reb":"よ"}],"sense":[{"gloss":["four","4"],"pos":["numeric"],"s_inf":["肆 is used in legal documents"]}]},{"k_ele":[{"keb":"恣"},{"keb":"擅"},{"keb":"縦"},{"keb":"肆"}],"r_ele":[{"reb":"ほしいまま"}],"sense":[{"gloss":["selfish","self-indulgent","arbitrary"],"misc":["word usually written using kana alone"],"pos":["adjectival nouns or quasi-adjectives (keiyodoshi)"]}]}]
+```
