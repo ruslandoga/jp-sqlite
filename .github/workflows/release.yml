@@ -22,12 +22,12 @@ jobs:
 
       - run: mix deps.get
       - run: bin/jmdict.sh
-      - run: lz4 jmdict.db
-
+      # - run: lz4 jmdict.db
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           name: jmdict.db
           files: |
             jmdict.db
-            jmdict.db.lz4
+
+        # jmdict.db.lz4
