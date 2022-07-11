@@ -1,6 +1,6 @@
 This repo contains scripts to build japanese-english dictionaries stored in SQLite. The databases can be downloaded from "releases" page. Each database contains a single dictionary of the same name.
 
-### `jmdict.db`
+### jmdict.db
 
 ```sql
 sqlite> .schema
@@ -9,11 +9,16 @@ CREATE TABLE entries(id integer primary key, entry text not null) without rowid,
 -- lookup table is used to index entry.k_ele.keb | entry.r_ele.reb
 CREATE TABLE lookup(expression text not null, id integer not null) strict;
 CREATE INDEX lookup_idx on lookup(expression);
-
--- example queries
-sqlite> select l.expression, e.entry from lookup l inner join entries e on e.id = l.id where l.expression = '四';
 ```
 
+#### Example queries
+
+```sql
+sqlite> select l.expression, e.entry from lookup l
+   ...> inner join entries e on e.id = l.id
+   ...> where l.expression = '四';
+```
+<details><summary>Result</summary>
 <table>
   <tr>
     <td> expression </td>
@@ -26,31 +31,18 @@ sqlite> select l.expression, e.entry from lookup l inner join entries e on e.id 
 ```json
 {
   "k_ele": [
-    {
-      "ke_pri": ["ichi1", "news1", "nf01"],
-      "keb": "四"
-    },
-    {
-      "keb": "４"
-    },
-    {
-      "keb": "肆"
-    }
+    {"ke_pri": ["ichi1", "news1", "nf01"], "keb": "四"},
+    {"keb": "４"},
+    {"keb": "肆"}
   ],
   "r_ele": [
-    {
-      "re_pri": ["ichi1"],
-      "reb": "し"
-    },
+    {"re_pri": ["ichi1"], "reb": "し"},
     {
       "re_pri": ["ichi1", "news1", "nf01"],
       "re_restr": ["四"],
       "reb": "よん"
     },
-    {
-      "re_restr": ["四"],
-      "reb": "よ"
-    }
+    {"re_restr": ["四"], "reb": "よ"}
   ],
   "sense": [
     {
@@ -71,14 +63,10 @@ sqlite> select l.expression, e.entry from lookup l inner join entries e on e.id 
 ```json
 {
   "k_ele": [
-    {
-      "keb": "四"
-    }
+    {"keb": "四"}
   ],
   "r_ele": [
-    {
-      "reb": "スー"
-    }
+    {"reb": "スー"}
   ],
   "sense": [
     {
@@ -92,11 +80,14 @@ sqlite> select l.expression, e.entry from lookup l inner join entries e on e.id 
 </td>
   </tr>
 </table>
+</details>
 
 ```sql
-sqlite> select l.expression, e.entry from lookup l inner join entries e on e.id = l.id where l.expression = '明後日';
+sqlite> select l.expression, e.entry from lookup l
+   ...> inner join entries e on e.id = l.id
+   ...> where l.expression = '明後日';
 ```
-
+<details><summary>Result</summary>
 <table>
 <tr>
 <td> expression </td> <td> entry </td>
@@ -141,28 +132,22 @@ sqlite> select l.expression, e.entry from lookup l inner join entries e on e.id 
 </td>
 </tr>
 </table>
+</details>
 
 ```sql
-sqlite> select json_group_array(json(e.entry)) from lookup l inner join entries e on e.id = l.id where l.expression = '肆';
+sqlite> select json_group_array(json(e.entry)) from lookup l
+   ...> inner join entries e on e.id = l.id
+   ...> where l.expression = '肆';
 ```
+<details><summary>Result</summary>
+
 ```json
 [
   {
     "k_ele": [
-      {
-        "ke_pri": [
-          "ichi1",
-          "news1",
-          "nf01"
-        ],
-        "keb": "四"
-      },
-      {
-        "keb": "４"
-      },
-      {
-        "keb": "肆"
-      }
+      {"ke_pri": ["ichi1", "news1", "nf01"], "keb": "四"},
+      {"keb": "４"},
+      {"keb": "肆"}
     ],
     "r_ele": [
       {
@@ -242,3 +227,5 @@ sqlite> select json_group_array(json(e.entry)) from lookup l inner join entries 
   }
 ]
 ```
+
+</details>
