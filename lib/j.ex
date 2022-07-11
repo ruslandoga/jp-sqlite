@@ -205,10 +205,12 @@ defmodule J do
     :ok =
       Sqlite3.execute(
         conn,
-        "create table if not exists lookup(expression text not null, id integer not null) strict"
+        # TODO covering index?
+        "create table if not exists lookup(expression text not null, id integer not null, primary key(expression, id)) without rowid, strict"
+        # "create table if not exists lookup(expression text not null, id integer not null) strict"
       )
 
-    :ok = Sqlite3.execute(conn, "create index if not exists lookup_idx on lookup(expression)")
+    # :ok = Sqlite3.execute(conn, "create index if not exists lookup_idx on lookup(expression)")
 
     conn
   end
@@ -285,7 +287,7 @@ defmodule J do
     |> Map.new()
   end
 
-  def save(input \\ "JMdict_e", output \\ "jmdict.db") do
+  def save(input \\ "JMdict_e", output \\ "jmdict-covering.db") do
     conn = open_db(output)
     :ok = Sqlite3.execute(conn, "delete from entries")
     :ok = Sqlite3.execute(conn, "delete from lookup")
