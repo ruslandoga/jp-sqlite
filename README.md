@@ -14,11 +14,11 @@ CREATE INDEX lookup_idx on lookup(expression);
 #### Example queries
 
 ```sql
-sqlite> select l.expression, e.entry from lookup l
-   ...> inner join entries e on e.id = l.id
-   ...> where l.expression = '四';
+select l.expression, e.entry from lookup l
+inner join entries e on e.id = l.id
+where l.expression = '四';
 ```
-<details><summary>Result</summary>
+<details><summary>Multiple rows</summary>
 <table>
   <tr>
     <td> expression </td>
@@ -82,12 +82,14 @@ sqlite> select l.expression, e.entry from lookup l
 </table>
 </details>
 
+---
+
 ```sql
-sqlite> select l.expression, e.entry from lookup l
-   ...> inner join entries e on e.id = l.id
-   ...> where l.expression = '明後日';
+select l.expression, e.entry from lookup l
+inner join entries e on e.id = l.id
+where l.expression = '明後日';
 ```
-<details><summary>Result</summary>
+<details><summary>Single row</summary>
 <table>
 <tr>
 <td> expression </td> <td> entry </td>
@@ -134,12 +136,14 @@ sqlite> select l.expression, e.entry from lookup l
 </table>
 </details>
 
+---
+
 ```sql
-sqlite> select json_group_array(json(e.entry)) from lookup l
-   ...> inner join entries e on e.id = l.id
-   ...> where l.expression = '肆';
+select json_group_array(json(e.entry)) from lookup l
+inner join entries e on e.id = l.id
+where l.expression = '肆';
 ```
-<details><summary>Result</summary>
+<details><summary>Aggregating multiple rows into json</summary>
 
 ```json
 [
